@@ -6,7 +6,7 @@ const AdvanceSearch = () => {
       <div className="flex flex-col ">
         <div className="py-1">
           <h1>Course:</h1>
-          <select className="bg-white rounded-lg border-2 py-2 px-3 border-blue-100">
+          <select className="appearance-none bg-white rounded-lg border-2 py-2 px-3 border-blue-100">
             <option value="" disabled>
               Course Type
             </option>
@@ -18,7 +18,7 @@ const AdvanceSearch = () => {
         </div>
         <div className="py-1">
           <h1>Diet: </h1>
-          <select className="bg-white rounded-lg border-2 py-2 px-3  border-blue-100">
+          <select className="appearance-none bg-white rounded-lg border-2 py-2 px-3  border-blue-100">
             <option value="ew">Any</option>
             <option value="ew">Vegan</option>
             <option value="ew">Ketogenic</option>
@@ -30,7 +30,7 @@ const AdvanceSearch = () => {
       <div className="flex flex-col">
         <div className="py-1">
           <h1>Cuisine: </h1>
-          <select className="bg-white rounded-lg border-2 py-2 px-3  border-blue-100">
+          <select className="appearance-none bg-white rounded-lg border-2 py-2 px-3  border-blue-100">
             <option value="ew">All</option>
             <option value="ew">Japanese</option>
             <option value="ew">Korean</option>
@@ -42,7 +42,7 @@ const AdvanceSearch = () => {
           <h1> Calories: </h1>
           <input
             type="number"
-            className="rounded-lg  border-2 py-2 px-3  border-blue-100 w-32"
+            className="appearance-none rounded-lg  border-2 py-2 px-3  border-blue-100 w-32"
           />
         </div>
       </div>

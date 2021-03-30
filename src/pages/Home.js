@@ -5,7 +5,9 @@ import SearchBar from "../components/SearchBar";
 import { useGlobalContext } from "../context/context";
 
 const Home = () => {
-  const { eds } = useGlobalContext();
+  const { recipe } = useGlobalContext();
+  console.log(recipe);
+
   return (
     <div className="">
       <SearchBar />
