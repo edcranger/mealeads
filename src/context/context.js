@@ -1,26 +1,33 @@
-import { useState } from "react";
-import { createContext, useContext, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useReducer,
+} from "react";
 import { useFetch } from "../utils/useFetch";
-
-const defaultfetchData = {
-  url: "/recipes/complexSearch",
-  params: {
-    number: 20,
-    instructionsRequired: true,
-    addRecipeInformation: true,
-    addRecipeNutrition: true,
-  },
-};
+import { initialState, reducer } from "../context/reducer";
+import api from "../api/api";
 
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
-  const [fetchData, setFetchData] = useState(defaultfetchData);
-  const { recipe } = useFetch(fetchData);
-  useEffect(() => {}, []);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [searchQuery, setSearchQuery] = useState({});
+
+
+  useEffect(() => {
+    
+  }, []);
+
+  const advanceSearchHandler = (query) => {
+    setSearchQuery(query);
+  };
 
   return (
-    <AppContext.Provider value={{ recipe }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, advanceSearchHandler }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 

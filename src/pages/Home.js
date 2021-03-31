@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import RecipeListContainer from "../components/RecipeListContainer";
 import SearchBar from "../components/SearchBar";
 import { useGlobalContext } from "../context/context";
