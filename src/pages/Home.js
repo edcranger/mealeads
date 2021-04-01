@@ -5,10 +5,9 @@ import { useGlobalContext } from "../context/context";
 
 const Home = () => {
   const { recipe } = useGlobalContext();
-  console.log(recipe);
 
   return (
-    <div className="">
+    <div>
       <SearchBar />
 
       <div className="w-full">
