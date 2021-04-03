@@ -30,12 +30,7 @@ const Navbar = () => {
                 >
                   Home
                 </Link>
-                <Link
-                  to="/recipe"
-                  className="py-4 px-3 text-gray-700 hover:text-yellow-600 font-semibold transition duration-500"
-                >
-                  Recipe
-                </Link>
+
                 <Link
                   to="/createmealplan"
                   className="py-4 px-3 text-gray-700 hover:text-yellow-600 font-semibold transition duration-500"
@@ -80,12 +75,6 @@ const Navbar = () => {
         >
           <Link to="/" className="block py-2 px-4 text-sm hover:bg-yellow-200">
             Home
-          </Link>
-          <Link
-            to="/recipe"
-            className="block py-2 px-4 text-sm hover:bg-yellow-200"
-          >
-            Recipe
           </Link>
           <Link to="/" className="block py-2 px-4 text-sm hover:bg-yellow-200">
             Meal Plan

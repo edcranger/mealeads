@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { courseList, dietList, cuisineList } from "../utils/dataList";
 import { useGlobalContext } from "../context/context";
 

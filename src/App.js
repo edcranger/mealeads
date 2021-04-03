@@ -14,7 +14,7 @@ function App() {
         <main className="flex-1 max-w-5xl  w-full  mx-auto px-8 flex flex-col ">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/recipe" component={SingleRecipe} />
+            <Route path="/recipe/profile/:id" component={SingleRecipe} />
             <Route path="*" component={Error} />
           </Switch>
         </main>

@@ -9,7 +9,6 @@ export const useFetch = ({ url, query }) => {
   useEffect(() => {
     const abortCtrl = new AbortController();
     (async () => {
-      console.log(query);
       setIsloading(true);
       try {
         const res = await api.get(

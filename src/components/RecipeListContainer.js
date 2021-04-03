@@ -11,7 +11,7 @@ const RecipeListContainer = () => {
 
   return (
     <section className=" mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-      {recipe.results.map((item) => (
+      {recipe.map((item) => (
         <RecipeCard key={item.id} {...item} />
       ))}
     </section>
