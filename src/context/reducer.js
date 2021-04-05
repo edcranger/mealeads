@@ -7,13 +7,12 @@ export const initialState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case "FETCH_RECIPE":
-      console.log("activated:", action.payload);
       return {
         ...state,
         recipe: action.payload,
         isLoading: false,
       };
-    case "Loading":
+    case "LOADING":
       return {
         ...state,
         isLoading: true,

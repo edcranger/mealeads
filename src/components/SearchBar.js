@@ -7,7 +7,7 @@ const SearchBar = () => {
   const [isAdvanceSearch, setIsAdvanceSearch] = useState(true);
 
   return (
-    <div className="py-5">
+    <div className="py-5  ">
       {isAdvanceSearch ? <AdvanceSearch /> : <SimpleSearch />}
       <div className=" py-1 w-full text-center">
         <div

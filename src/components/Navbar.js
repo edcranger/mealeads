@@ -7,7 +7,7 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(true);
 
   return (
-    <div className="py-8 top-0">
+    <div className="py-8 top-0 z-10">
       <nav className="bg-gray-100 fixed top-0 inset-x-0 shadow">
         <div className="max-w-5xl mx-auto px-8">
           <div className="flex justify-between ">
@@ -30,6 +30,7 @@ const Navbar = () => {
                 >
                   Home
                 </Link>
+
                 <Link
                   to="/createmealplan"
                   className="py-4 px-3 text-gray-700 hover:text-yellow-600 font-semibold transition duration-500"
@@ -76,7 +77,7 @@ const Navbar = () => {
             Home
           </Link>
           <Link to="/" className="block py-2 px-4 text-sm hover:bg-yellow-200">
-            Create Meal Plan
+            Meal Plan
           </Link>
         </div>
       </nav>

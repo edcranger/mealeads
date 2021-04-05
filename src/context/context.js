@@ -5,9 +5,8 @@ import {
   useState,
   useReducer,
 } from "react";
-import { useFetch } from "../utils/useFetch";
-import { initialState, reducer } from "../context/reducer";
 import api from "../api/api";
+import { initialState, reducer } from "../context/reducer";
 
 const AppContext = createContext();
 
@@ -15,12 +14,26 @@ const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [searchQuery, setSearchQuery] = useState({});
 
+  const queryParams = {
+    number: 20,
+    addRecipeNutrition: true,
+    sort: "random",
+  };
+
+  const fetchData = async () => {
+    dispatch({ type: "LOADING" });
+    const res = await api.get("complexSearch", {
+      params: { ...queryParams, ...searchQuery },
+    });
+    dispatch({ type: "FETCH_RECIPE", payload: res.data });
+  };
 
   useEffect(() => {
-    
-  }, []);
+    fetchData();
+  }, [searchQuery]);
 
   const advanceSearchHandler = (query) => {
+    console.log(query);
     setSearchQuery(query);
   };
 

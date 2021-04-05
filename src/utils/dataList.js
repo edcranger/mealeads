@@ -48,7 +48,7 @@ export const cuisineList = [
   "italian",
   "japanese",
   "jewish",
-  "jorean",
+  "korean",
   "latin american",
   "mediterranean",
   "mexican",
