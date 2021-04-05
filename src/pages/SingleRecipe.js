@@ -12,6 +12,7 @@ const SingleRecipe = () => {
     url: `/complexSearch/${id}`,
   });
   const [instructions, setInstructions] = useState([]);
+  const [equipments, setEquiptments] = useState([]);
 
   const {
     title,
@@ -31,6 +32,20 @@ const SingleRecipe = () => {
       setInstructions(analyzedInstructions[0].steps);
     }
   }, [analyzedInstructions]);
+
+  useEffect(() => {
+    const filteredEquipment = instructions.reduce((acc, cur) => {
+      cur.equipment.map((equip) => {
+        const { id, image, name } = equip;
+        acc.push({ id, image, name });
+      });
+      return acc;
+    }, []);
+    const filt = [
+      ...new Set(filteredEquipment.map((o) => JSON.stringify(o))),
+    ].map((string) => JSON.parse(string));
+    setEquiptments(filt);
+  }, [instructions]);
 
   if (isLoading) {
     return (
@@ -87,17 +102,34 @@ const SingleRecipe = () => {
           <div className="ingredients-container bg-gray-20 text-justify mt-4 flex flex-col md:flex-row">
             <div className="ingredients-cont flex flex-col">
               <h1 className="text-2xl font-bold text-gray-700 mb-3">
-                Ingredients
+                Ingredients and Equipment
               </h1>
               {extendedIngredients.map((ing) => {
                 return (
-                  <div className="flex items-center space-x-3 my-1">
+                  <div
+                    key={ing.id}
+                    className="flex items-center space-x-3 my-1"
+                  >
                     <img
                       src="https://spoonacular.com/cdn/ingredients_100x100/potatoes-yukon-gold.png"
                       alt="patata"
                       className="w-11 h-11"
                     />
                     <p>{ing.original}</p>
+                  </div>
+                );
+              })}
+
+              {equipments.map((equip) => {
+                const { id, name, image } = equip;
+                return (
+                  <div key={id} className="flex items-center space-x-3 my-1">
+                    <img
+                      src="https://spoonacular.com/cdn/ingredients_100x100/potatoes-yukon-gold.png"
+                      alt="patata"
+                      className="w-11 h-11"
+                    />
+                    <p>{name}</p>
                   </div>
                 );
               })}
