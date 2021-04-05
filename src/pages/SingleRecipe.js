@@ -1,35 +1,36 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../utils/useFetch";
 import { ImClock } from "react-icons/im";
-import { FaPercent, FaHeartbeat } from "react-icons/fa";
+import { FaHeartbeat } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import DOMpurify from "dompurify";
 
 const SingleRecipe = () => {
   const { id } = useParams();
-  const summaryContainer = useRef(null);
   const { isLoading, recipe } = useFetch({
     url: `/complexSearch/${id}`,
   });
+  const [instructions, setInstructions] = useState([]);
 
   const {
     title,
     image,
     summary,
     healthScore,
-    nutrition,
+    extendedIngredients,
     servings,
     readyInMinutes,
-    diets,
+    analyzedInstructions,
   } = recipe;
 
-  useEffect(() => {
-    setTimeout(() => {
-      summaryContainer.current.innerHTML = summary;
-    }, 1000);
+  /*   const { steps } = analyzedInstructions[0]; */
 
-    return () => {};
-  }, [summary]);
+  useEffect(() => {
+    if (analyzedInstructions) {
+      setInstructions(analyzedInstructions[0].steps);
+    }
+  }, [analyzedInstructions]);
 
   if (isLoading) {
     return (
@@ -40,22 +41,25 @@ const SingleRecipe = () => {
   return (
     <div className="  h-full">
       <div className="flex flex-col justify-center mt-8">
-        <div className="features mx-auto flex mt-4 space-x-4">
+        <div className="features mx-auto flex mt-4 space-x-5 rounded-lg bg-green-100 p-3 opacity-90">
           <div className="text-center">
             <FaHeartbeat className="h-7 w-7 mx-auto text-green-500" />
-            <h1>{healthScore} Health score</h1>
+            <h1 className="text-xs md:text-md font-semibold">
+              {healthScore} Healthscore
+            </h1>
           </div>
-          <div>
-            <FaPercent className="h-7 w-7 mx-auto text-red-500" />
-            {<h1>{parseInt(nutrition.nutrients[0].amount)} Calories</h1>}
-          </div>
+
           <div>
             <HiOutlineUserGroup className="h-7 w-7 mx-auto text-yellow-500" />
-            <h1>{parseInt(servings)} Servings</h1>
+            <h1 className="text-xs md:text-md font-semibold text-center">
+              {parseInt(servings)} Servings
+            </h1>
           </div>
           <div>
             <ImClock className="h-7 w-7  mx-auto text-blue-500" />
-            <h1>{parseInt(readyInMinutes)} Minutes</h1>
+            <h1 className="text-xs md:text-md font-semibold text-center">
+              {parseInt(readyInMinutes)} Minutes
+            </h1>
           </div>
         </div>
         <div className="img-container mx-auto mt-5">
@@ -72,12 +76,54 @@ const SingleRecipe = () => {
           </h1>
         </div>
 
-        <div className="summary-container bg-gray-20 text-justify">
-          <p className="bg-yellow-50 py-2 px-4 mt" ref={summaryContainer}>
-            <div className="text-center h-60 flex flex-col items-center justify-center">
-              <p>LOADING...</p>
+        <div className="summary-container bg-gray-20 text-justify ">
+          <p
+            className="bg-yellow-50 rounded-lg py-2 px-4 mt tracking-wide text-gray-600"
+            dangerouslySetInnerHTML={{ __html: DOMpurify.sanitize(summary) }}
+          ></p>
+        </div>
+
+        <div className="ing-steps-container grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="ingredients-container bg-gray-20 text-justify mt-4 flex flex-col md:flex-row">
+            <div className="ingredients-cont flex flex-col">
+              <h1 className="text-2xl font-bold text-gray-700 mb-3">
+                Ingredients
+              </h1>
+              {extendedIngredients.map((ing) => {
+                return (
+                  <div className="flex items-center space-x-3 my-1">
+                    <img
+                      src="https://spoonacular.com/cdn/ingredients_100x100/potatoes-yukon-gold.png"
+                      alt="patata"
+                      className="w-11 h-11"
+                    />
+                    <p>{ing.original}</p>
+                  </div>
+                );
+              })}
             </div>
-          </p>
+          </div>
+
+          <div className="steps-container mt-4">
+            <h1 className="text-2xl font-bold text-gray-700 mb-2">Steps</h1>
+            <div className="flex flex-col">
+              {instructions.map((list) => {
+                const { number, step } = list;
+                return (
+                  <div key={number} className="flex  my-3 space-x-2">
+                    <div>
+                      <p className="bg-yellow-500 text-white rounded-full w-6 text-center">
+                        {number}
+                      </p>
+                    </div>
+                    <div>
+                      <p>{step}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

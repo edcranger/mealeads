@@ -22,7 +22,7 @@ const AppProvider = ({ children }) => {
 
   const fetchData = async () => {
     dispatch({ type: "LOADING" });
-    const res = await api.get("/complexSearch", {
+    const res = await api.get("complexSearch", {
       params: { ...queryParams, ...searchQuery },
     });
     dispatch({ type: "FETCH_RECIPE", payload: res.data });
