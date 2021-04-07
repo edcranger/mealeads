@@ -4,12 +4,13 @@ import { useFetch } from "../utils/useFetch";
 import { ImClock } from "react-icons/im";
 import { FaHeartbeat } from "react-icons/fa";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { RotateSpinner } from "react-spinners-kit";
 import DOMpurify from "dompurify";
 
 const SingleRecipe = () => {
   const { id } = useParams();
   const { isLoading, recipe } = useFetch({
-    url: `/complexSearch/${id}`,
+    url: `/recipes/${id}/information`,
   });
   const [instructions, setInstructions] = useState([]);
   const [equipments, setEquiptments] = useState([]);
@@ -25,10 +26,8 @@ const SingleRecipe = () => {
     analyzedInstructions,
   } = recipe;
 
-  /*   const { steps } = analyzedInstructions[0]; */
-
   useEffect(() => {
-    if (analyzedInstructions) {
+    if (analyzedInstructions && analyzedInstructions.length > 0) {
       setInstructions(analyzedInstructions[0].steps);
     }
   }, [analyzedInstructions]);
@@ -49,7 +48,9 @@ const SingleRecipe = () => {
 
   if (isLoading) {
     return (
-      <h1 className="text-3xl font-semibold tracking-wider">Loading...</h1>
+      <section className="flex justify-center mt-20 ">
+        <RotateSpinner size={200} className="mx-auto" />
+      </section>
     );
   }
 
@@ -91,9 +92,9 @@ const SingleRecipe = () => {
           </h1>
         </div>
 
-        <div className="summary-container bg-gray-20 text-justify ">
+        <div className="summary-container border-2 rounded-md shadow border-green-200 bg-gray-20 text-justify ">
           <p
-            className="bg-yellow-50 rounded-lg py-2 px-4 mt tracking-wide text-gray-600"
+            className="bg-green-50 rounded-lg py-2 px-4 mt tracking-wide text-gray-600"
             dangerouslySetInnerHTML={{ __html: DOMpurify.sanitize(summary) }}
           ></p>
         </div>
@@ -105,17 +106,15 @@ const SingleRecipe = () => {
                 Ingredients and Equipment
               </h1>
               {extendedIngredients.map((ing) => {
+                const { id, original, image } = ing;
                 return (
-                  <div
-                    key={ing.id}
-                    className="flex items-center space-x-3 my-1"
-                  >
+                  <div key={id} className="flex items-center space-x-3 my-1">
                     <img
-                      src="https://spoonacular.com/cdn/ingredients_100x100/potatoes-yukon-gold.png"
+                      src={`https://spoonacular.com/cdn/ingredients_100x100/${image}`}
                       alt="patata"
-                      className="w-11 h-11"
+                      className=" w-16 h-16"
                     />
-                    <p>{ing.original}</p>
+                    <p>{original}</p>
                   </div>
                 );
               })}
@@ -125,9 +124,9 @@ const SingleRecipe = () => {
                 return (
                   <div key={id} className="flex items-center space-x-3 my-1">
                     <img
-                      src="https://spoonacular.com/cdn/ingredients_100x100/potatoes-yukon-gold.png"
+                      src={`https://spoonacular.com/cdn/equipment_100x100/${image}`}
                       alt="patata"
-                      className="w-11 h-11"
+                      className="w-16 h-16"
                     />
                     <p>{name}</p>
                   </div>
@@ -139,21 +138,29 @@ const SingleRecipe = () => {
           <div className="steps-container mt-4">
             <h1 className="text-2xl font-bold text-gray-700 mb-2">Steps</h1>
             <div className="flex flex-col">
-              {instructions.map((list) => {
-                const { number, step } = list;
-                return (
-                  <div key={number} className="flex  my-3 space-x-2">
-                    <div>
-                      <p className="bg-yellow-500 text-white rounded-full w-6 text-center">
-                        {number}
-                      </p>
-                    </div>
-                    <div>
-                      <p>{step}</p>
-                    </div>
-                  </div>
-                );
-              })}
+              {instructions.length < 1 ? (
+                <h1 className="text-lg font-semibold text-gray-700 my-10">
+                  No steps recorded on file.
+                </h1>
+              ) : (
+                <div>
+                  {instructions.map((list) => {
+                    const { number, step } = list;
+                    return (
+                      <div key={number} className="flex  my-3 space-x-2">
+                        <div>
+                          <p className="bg-yellow-500 text-white rounded-full w-6 text-center">
+                            {number}
+                          </p>
+                        </div>
+                        <div>
+                          <p>{step}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </div>

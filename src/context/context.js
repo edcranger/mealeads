@@ -15,14 +15,14 @@ const AppProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState({});
 
   const queryParams = {
-    number: 20,
+    number: 10,
     addRecipeNutrition: true,
     sort: "random",
   };
 
   const fetchData = async () => {
     dispatch({ type: "LOADING" });
-    const res = await api.get("complexSearch", {
+    const res = await api.get("/recipes/complexSearch", {
       params: { ...queryParams, ...searchQuery },
     });
     dispatch({ type: "FETCH_RECIPE", payload: res.data });
